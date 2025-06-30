@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kapil.stocks.R
 import com.kapil.stocks.data.model.Stock
 
-class StockAdapter(private val list: List<Stock>, private val onClick: (Stock) -> Unit) :
+class StockAdapter(private val onClick: (Stock) -> Unit) :
     RecyclerView.Adapter<StockAdapter.StockViewHolder>() {
+
+    private var _data: List<Stock> = emptyList()
 
     inner class StockViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.findViewById(R.id.stockName)
@@ -22,11 +24,16 @@ class StockAdapter(private val list: List<Stock>, private val onClick: (Stock) -
     }
 
     override fun onBindViewHolder(holder: StockViewHolder, position: Int) {
-        val stock = list[position]
+        val stock = _data[position]
         holder.name.text = stock.name
         holder.price.text = stock.price
         holder.itemView.setOnClickListener { onClick(stock) }
     }
 
-    override fun getItemCount(): Int = list.size
+    fun updateData(list: List<Stock>){
+        _data = list
+        notifyDataSetChanged()
+    }
+
+    override fun getItemCount(): Int = _data.size
 }

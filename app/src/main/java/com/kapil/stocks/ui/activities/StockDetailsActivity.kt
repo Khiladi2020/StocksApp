@@ -2,14 +2,18 @@ package com.kapil.stocks.ui.activities
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.kapil.stocks.constants.Constants
 import com.kapil.stocks.databinding.ActivityStockDetailBinding
 import com.kapil.stocks.databinding.ItemStatBinding
 import com.kapil.stocks.viewmodel.StockViewModel
@@ -19,15 +23,32 @@ class StockDetailsActivity : AppCompatActivity() {
 
     private lateinit var viewModel: StockViewModel
     private lateinit var _binding: ActivityStockDetailBinding
+    private lateinit var companyName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         _binding = ActivityStockDetailBinding.inflate(layoutInflater)
         setContentView(_binding.root)
 
+        // Apply insets
+        ViewCompat.setOnApplyWindowInsetsListener(_binding.parent) { view, insets ->
+            val statusBarInsets = insets.getInsets(WindowInsetsCompat.Type.statusBars())
+            view.setPadding(0, statusBarInsets.top, 0, 0)
+            insets
+        }
+
+        companyName = intent?.getStringExtra(Constants.COMPANY_NAME).toString()
+        Log.d(Constants.TAG, "got company name in detail activity: ${companyName}")
+
         viewModel = ViewModelProvider(this)[StockViewModel::class.java]
 
+        initData()
         setupListeners()
+    }
+
+    private fun initData() {
+        viewModel.fetchStockDetails(companyName)
     }
 
     private fun setupListeners() {
@@ -48,26 +69,20 @@ class StockDetailsActivity : AppCompatActivity() {
 
                     // Chart
                     setupChart()
-
-                    // Grid Stats
-                    //setStat("52-Week Low", "$${data._52WeekLow}")
-                    setStat("Current Price", "$${data.PERatio}")
-                    //setStat("52-Week High", "$${data._52WeekHigh}")
-                    setStat("Market Cap", "$${data.MarketCapitalization}")
-                    setStat("P/E Ratio", data.PERatio)
-                    setStat("Dividend Yield", "${data.DividendYield}%")
-                    setStat("Profit Margin", "${data.ProfitMargin}%")
-                    setStat("EPS", "$${data.EPS}")
                 }
             }
+        }
+
+        _binding.topAppBar.setNavigationOnClickListener{
+            finish()
         }
     }
 
     private fun setStat(label: String, value: String) {
-        val statBinding = ItemStatBinding.inflate(LayoutInflater.from(this))
-        statBinding.tvStatLabel.text = label
-        statBinding.tvStatValue.text = value
-        _binding.gridStats.addView(statBinding.root)
+//        val statBinding = ItemStatBinding.inflate(LayoutInflater.from(this))
+//        statBinding.tvStatLabel.text = label
+//        statBinding.tvStatValue.text = value
+//        _binding.gridStats.addView(statBinding.root)
     }
 
     private fun setupChart() {

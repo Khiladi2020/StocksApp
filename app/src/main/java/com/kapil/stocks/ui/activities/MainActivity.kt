@@ -3,16 +3,11 @@ package com.kapil.stocks.ui.activities
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.kapil.stocks.R
 import com.kapil.stocks.adapters.StockAdapter
-import com.kapil.stocks.data.dummy.StockData
+//import com.kapil.stocks.data.fallback.StockData
 import com.kapil.stocks.databinding.ActivityMainBinding
-import com.kapil.stocks.ui.activities.StockDetailsActivity
-import com.kapil.stocks.ui.activities.ViewAllGainersActivity
-import com.kapil.stocks.ui.activities.ViewAllLosersActivity
-import com.kapil.stocks.ui.activities.WatchlistActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,18 +24,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerViews() {
-        val gainers = StockData.getTopGainers().take(4)
-        val losers = StockData.getTopLosers().take(4)
-
-        binding.recyclerGainers.layoutManager = GridLayoutManager(this, 2)
-        binding.recyclerGainers.adapter = StockAdapter(gainers) { stock ->
-            openStockDetails(stock.name)  // name == symbol
-        }
-
-        binding.recyclerLosers.layoutManager = GridLayoutManager(this, 2)
-        binding.recyclerLosers.adapter = StockAdapter(losers) { stock ->
-            openStockDetails(stock.name)
-        }
+//        val gainers = StockData.getTopGainers().take(4)
+//        val losers = StockData.getTopLosers().take(4)
+//
+//        binding.recyclerGainers.layoutManager = GridLayoutManager(this, 2)
+//        binding.recyclerGainers.adapter = StockAdapter() { stock ->
+//            openStockDetails(stock.name)  // name == symbol
+//        }
+//
+//        binding.recyclerLosers.layoutManager = GridLayoutManager(this, 2)
+//        binding.recyclerLosers.adapter = StockAdapter() { stock ->
+//            openStockDetails(stock.name)
+//        }
     }
 
     private fun openStockDetails(symbol: String) {
@@ -73,13 +68,13 @@ class MainActivity : AppCompatActivity() {
 //    }
 private fun setupViewAllClickListeners() {
     binding.viewAllGainers.setOnClickListener {
-        val intent = Intent(this, ViewAllStocksActivity::class.java)
+        val intent = Intent(this, StockListActivity::class.java)
         intent.putExtra("isGainers", true)
         startActivity(intent)
     }
 
     binding.viewAllLosers.setOnClickListener {
-        val intent = Intent(this, ViewAllStocksActivity::class.java)
+        val intent = Intent(this, StockListActivity::class.java)
         intent.putExtra("isGainers", false)
         startActivity(intent)
     }

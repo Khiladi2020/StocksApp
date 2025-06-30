@@ -4,8 +4,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiService {
-    //val baseUrl = "https://www.alphavantage.co"
-    val baseUrl = "http://10.0.2.2:3000"
+    val baseUrl = "https://www.alphavantage.co"
+//    val baseUrl = "http://10.0.2.2:3000"
     private var apiInstance: Retrofit? = null;
 
     fun getInstance(): Retrofit {

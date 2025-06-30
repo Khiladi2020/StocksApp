@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -52,6 +53,17 @@ class StockDetailsActivity : AppCompatActivity() {
     }
 
     private fun setupListeners() {
+        lifecycleScope.launch {
+            viewModel.isLoading.collect { isVisible ->
+                if(isVisible == true){
+                    _binding.progressBar.visibility = View.VISIBLE
+                    _binding.stockDetailContainer.visibility = View.GONE
+                } else {
+                    _binding.progressBar.visibility = View.GONE
+                    _binding.stockDetailContainer.visibility = View.VISIBLE
+                }
+            }
+        }
         lifecycleScope.launch {
             viewModel.stockDetails.collect { data ->
                 if (data != null) {

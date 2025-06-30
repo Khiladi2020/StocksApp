@@ -23,6 +23,15 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:visibility="visible" />
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/stockDetailContainer"
         android:layout_width="match_parent"
@@ -99,7 +108,6 @@
                 android:text="Industry: Software"
                 android:textColor="#333333"
                 android:textSize="14sp" />
-
 
 
             <!-- Grid Stats Section -->

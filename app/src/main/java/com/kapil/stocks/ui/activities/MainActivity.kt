@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.kapil.stocks.R
 import com.kapil.stocks.adapters.StockAdapter
+import com.kapil.stocks.constants.Constants
 //import com.kapil.stocks.data.fallback.StockData
 import com.kapil.stocks.databinding.ActivityMainBinding
+import com.kapil.stocks.viewmodel.STOCKS_LIST_TYPE
 
 class MainActivity : AppCompatActivity() {
 
@@ -69,13 +71,13 @@ class MainActivity : AppCompatActivity() {
 private fun setupViewAllClickListeners() {
     binding.viewAllGainers.setOnClickListener {
         val intent = Intent(this, StockListActivity::class.java)
-        intent.putExtra("isGainers", true)
+        intent.putExtra(Constants.LIST_TYPE, STOCKS_LIST_TYPE.GAINERS.toString())
         startActivity(intent)
     }
 
     binding.viewAllLosers.setOnClickListener {
         val intent = Intent(this, StockListActivity::class.java)
-        intent.putExtra("isGainers", false)
+        intent.putExtra(Constants.LIST_TYPE, STOCKS_LIST_TYPE.LOSERS.toString())
         startActivity(intent)
     }
 }

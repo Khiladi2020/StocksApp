@@ -9,10 +9,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-enum class ALL_STOCKS_TYPE {
-    GAINERS,
-    LOSERS,
-    ALL
+enum class STOCKS_LIST_TYPE(type: String) {
+    GAINERS("GAINERS"),
+    LOSERS("LOSERS"),
+    ALL("ALL")
+
 }
 
 class StockListViewModel : ViewModel() {
@@ -24,16 +25,16 @@ class StockListViewModel : ViewModel() {
     val stockDetails: StateFlow<List<Stock>> = _stockList.asStateFlow();
 
 
-    fun fetchStocksList(dataType: ALL_STOCKS_TYPE) {
+    fun fetchStocksList(dataType: STOCKS_LIST_TYPE) {
         viewModelScope.launch {
             if (false) {
                 // API call code
             } else {
                 // Fallback to serve local data
                 when (dataType) {
-                    ALL_STOCKS_TYPE.GAINERS -> _stockList.emit(MarketSummaryFallback.marketSummaryData.topGainers)
-                    ALL_STOCKS_TYPE.ALL -> _stockList.emit(MarketSummaryFallback.marketSummaryData.topGainers)
-                    ALL_STOCKS_TYPE.LOSERS -> _stockList.emit(MarketSummaryFallback.marketSummaryData.topLosers)
+                    STOCKS_LIST_TYPE.GAINERS -> _stockList.emit(MarketSummaryFallback.marketSummaryData.topGainers)
+                    STOCKS_LIST_TYPE.ALL -> _stockList.emit(MarketSummaryFallback.marketSummaryData.topGainers)
+                    STOCKS_LIST_TYPE.LOSERS -> _stockList.emit(MarketSummaryFallback.marketSummaryData.topLosers)
                 }
             }
         }

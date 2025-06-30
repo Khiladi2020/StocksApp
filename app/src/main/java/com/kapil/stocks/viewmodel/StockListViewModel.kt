@@ -4,9 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kapil.stocks.data.fallback.MarketSummaryFallback
 import com.kapil.stocks.data.model.Stock
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 enum class STOCKS_LIST_TYPE(type: String) {
@@ -38,6 +40,20 @@ class StockListViewModel : ViewModel() {
                 }
             }
         }
+    }
 
+    fun fetchTopGainersLosers(dataType: STOCKS_LIST_TYPE): Flow<List<Stock>> {
+        return flow {
+            if (false) {
+                // API call code
+            } else {
+                // Fallback to serve local data
+                when (dataType) {
+                    STOCKS_LIST_TYPE.GAINERS -> emit(MarketSummaryFallback.marketSummaryData.topGainers)
+                    STOCKS_LIST_TYPE.ALL -> emit(MarketSummaryFallback.marketSummaryData.topGainers)
+                    STOCKS_LIST_TYPE.LOSERS -> emit(MarketSummaryFallback.marketSummaryData.topLosers)
+                }
+            }
+        }
     }
 }

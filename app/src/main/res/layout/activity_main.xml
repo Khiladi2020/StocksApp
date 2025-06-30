@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/parent"
     tools:context=".ui.activities.MainActivity">
 
     <!-- Header with App Title and Search -->
@@ -51,7 +52,7 @@
             android:padding="16dp">
 
             <!-- Top Gainers -->
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp">
@@ -62,16 +63,18 @@
                     android:layout_height="wrap_content"
                     android:text="Top Gainers"
                     android:textStyle="bold"
+                    android:layout_weight="1"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/viewAllGainers"
                     android:layout_width="wrap_content"
+                    android:gravity="end"
                     android:layout_height="wrap_content"
                     android:text="View All"
                     android:textColor="@android:color/darker_gray"
                     android:layout_alignParentEnd="true" />
-            </RelativeLayout>
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerGainers"
@@ -82,7 +85,7 @@
                 android:layout_marginBottom="16dp" />
 
             <!-- Top Losers -->
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp">
@@ -93,6 +96,7 @@
                     android:layout_height="wrap_content"
                     android:text="Top Losers"
                     android:textStyle="bold"
+                    android:layout_weight="1"
                     android:textSize="16sp" />
 
                 <TextView
@@ -100,9 +104,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="View All"
+                    android:gravity="end"
                     android:textColor="@android:color/darker_gray"
                     android:layout_alignParentEnd="true" />
-            </RelativeLayout>
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerLosers"

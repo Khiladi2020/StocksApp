@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kapil.stocks.constants.Constants
+import com.kapil.stocks.data.fallback.AllStockInfoFallback
 import com.kapil.stocks.data.fallback.StockDetailFallback
 import com.kapil.stocks.data.model.StockDetails
 import com.kapil.stocks.network.ApiService
@@ -31,7 +32,7 @@ class StockViewModel : ViewModel() {
             } catch (e: Exception) {
                 Log.d(Constants.TAG, "stock details API failed")
                 // Serve fallback data
-                val data = StockDetailFallback.ibmStockDetails.copy(Name = stockName)
+                val data = AllStockInfoFallback.allStocks.get(stockName)
                 _stockdetails.emit(data)
             }
 

@@ -35,6 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <!-- Header Section -->
             <TextView
                 android:id="@+id/tvCompanyName"
@@ -62,6 +63,13 @@
                 android:text="$123.45"
                 android:textColor="@android:color/holo_green_dark"
                 android:textSize="24sp" />
+
+            <!-- Line Chart -->
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/lineChart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="16dp" />
 
             <!-- Description -->
             <TextView
@@ -92,12 +100,7 @@
                 android:textColor="#333333"
                 android:textSize="14sp" />
 
-            <!-- Line Chart -->
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/lineChart"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="16dp" />
+
 
             <!-- Grid Stats Section -->
             <LinearLayout

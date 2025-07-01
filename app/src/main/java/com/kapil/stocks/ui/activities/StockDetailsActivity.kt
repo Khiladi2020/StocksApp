@@ -3,8 +3,8 @@ package com.kapil.stocks.ui.activities
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -14,9 +14,11 @@ import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.kapil.stocks.R
 import com.kapil.stocks.constants.Constants
+import com.kapil.stocks.data.model.WatchList
 import com.kapil.stocks.databinding.ActivityStockDetailBinding
-import com.kapil.stocks.databinding.ItemStatBinding
+import com.kapil.stocks.services.SharedPreferences
 import com.kapil.stocks.viewmodel.StockViewModel
 import kotlinx.coroutines.launch
 
@@ -53,6 +55,21 @@ class StockDetailsActivity : AppCompatActivity() {
     }
 
     private fun setupListeners() {
+        _binding.topAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.set_watchlist -> {
+                    val existingData = SharedPreferences.readWatchlistData(this)
+                    val existingWatchList = if (existingData.size > 0) existingData[0] else WatchList(name = "WatchList 1", stocks = emptyList())
+                    val newData = existingWatchList.copy(stocks = existingWatchList.stocks.plus(viewModel.stockDetails.value!!))
+                    SharedPreferences.saveWatchlistData(this, listOf(newData))
+                    Log.d(Constants.TAG, "final watchlist data ${newData} ${existingData}")
+                    Toast.makeText(this, "Item saved in watchlist", Toast.LENGTH_SHORT).show()
+                    true
+                }
+
+                else -> { true}
+            }
+        }
         lifecycleScope.launch {
             viewModel.isLoading.collect { isVisible ->
                 if(isVisible == true){

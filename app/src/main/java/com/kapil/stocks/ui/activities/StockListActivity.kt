@@ -55,6 +55,10 @@ class StockListActivity : AppCompatActivity() {
     }
 
     private fun setupAppBar() {
+        if(listType == STOCKS_LIST_TYPE.WATCHLIST){
+            binding.topAppBar.title = "WatchList 1"
+            return
+        }
         binding.topAppBar.title =
             if (listType == STOCKS_LIST_TYPE.GAINERS) "Top Gainers" else "Top Losers"
     }
@@ -64,6 +68,8 @@ class StockListActivity : AppCompatActivity() {
             viewModel.fetchStocksList(STOCKS_LIST_TYPE.LOSERS)
         } else if (listType == STOCKS_LIST_TYPE.GAINERS) {
             viewModel.fetchStocksList(STOCKS_LIST_TYPE.GAINERS)
+        } else if (listType == STOCKS_LIST_TYPE.WATCHLIST) {
+            viewModel.fetchWatchList(this)
         }
     }
 

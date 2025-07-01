@@ -3,6 +3,7 @@ package com.kapil.stocks.ui.activities
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -46,7 +47,14 @@ class WatchlistActivity : AppCompatActivity() {
     private fun initData() {
         val watchListData = SharedPreferences.readWatchlistData(this)
         Log.d(Constants.TAG, "watchlist data ${watchListData}")
-        (binding.recyclerView.adapter as WatchlistAdapter).updateData(watchListData ?: emptyList());
+        if (watchListData.size == 0) {
+            binding.watchlistNotPresent.visibility = View.VISIBLE
+        } else {
+            (binding.recyclerView.adapter as WatchlistAdapter).updateData(
+                watchListData ?: emptyList()
+            );
+
+        }
     }
 
     private fun setupRecyclerView() {
